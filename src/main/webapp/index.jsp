@@ -6,6 +6,6 @@
 
 <p> This is a Jenkings Tutorial Series by a not so great instructor</p>
 
-<p> The deployment is successful via Jenkins </p>
+<p> This instructor really needs to be better </p>
 </body>
 </html>
