@@ -3,9 +3,7 @@ pipeline {
     stages {
        stage ('Build Servlet Project') {
            steps {
-                withEnv(["PATH+M2_HOME=/Applications/apache-maven-3.6.0/bin"]){
-                    sh 'mvn clean package'
-                }
+                sh 'mvn clean package'
            }
             post {
                 success {
