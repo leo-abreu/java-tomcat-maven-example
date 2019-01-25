@@ -2,10 +2,11 @@ pipeline {
     agent any
     stages {
        stage ('Build Servlet Project'){
-            withEnv (["M2_HOME=/Applications/apache-maven-3.6.0/bin"]){
-                sh 'mvn clean package'
-            }
-
+           steps{
+                withEnv(["PATH+M2_HOME=/Applications/apache-maven-3.6.0/bin"]){
+                    sh 'mvn clean package'
+                }
+           }
             post {
                 success {
                     echo 'Now Archiving ...'
