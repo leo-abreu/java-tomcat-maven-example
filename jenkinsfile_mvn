@@ -4,7 +4,7 @@ pipeline {
        stage ('Build Servlet Project') {
            steps {
                 withEnv(["PATH+M2_HOME=/Applications/apache-maven-3.6.0/bin"]){
-                    sh 'mvn clean pack'
+                    sh 'mvn clean package'
                 }
            }
             post {
@@ -12,6 +12,11 @@ pipeline {
                     echo 'Now Archiving ...'
                     archiveArtifacts artifacts : '**/*.war'
                 }
+            }
+        }
+        stage ('Deploy Build in Staging Area'){
+            steps{
+                build job: 'Deploy-StagingArea-Pipeline'
             }
         }
     }
