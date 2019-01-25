@@ -1,15 +1,8 @@
 pipeline {
     agent any
     stages {
-        stage ('Initialize M2_HOME'){
-            steps{
-                env.M2_HOME = '/Applications/apache-maven-3.6.0/bin'
-            }
-        }
-        
-        stage ('Build Servlet Project'){
-            
-            steps {
+       stage ('Build Servlet Project'){
+            withEnv ("M2_HOME=/Applications/apache-maven-3.6.0/bin"]){
                 sh 'mvn clean package'
             }
 
