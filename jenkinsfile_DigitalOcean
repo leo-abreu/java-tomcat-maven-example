@@ -13,9 +13,9 @@ pipeline {
            }
             post {
                 success {
-                    echo 'Now Stashing ...'
-                    // archiveArtifacts artifacts : '**/*.war'
-                    stash name: "warfiles", includes: "**/*.war"
+                    echo 'Could Archive, but temporarily disabled ...'
+                    archiveArtifacts artifacts : '**/*.war'
+                    // stash name: "warfiles", includes: "**/*.war"
                 }
             }
         }
@@ -24,8 +24,8 @@ pipeline {
                label 'STAGE'
            }
             steps{
-                echo 'Unstash WAR files...'
-                unstash "warfiles"
+                // echo 'Unstash WAR files...'
+                // unstash "warfiles"
                 build job: 'Deploy_To_Tomcat'
             }
         }
