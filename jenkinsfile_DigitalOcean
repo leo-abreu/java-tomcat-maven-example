@@ -14,13 +14,15 @@ pipeline {
             post {
                 success {
                     echo 'Now Archiving ...'
-                    archiveArtifacts artifacts : '**/*.war'
+                    // archiveArtifacts artifacts : '**/*.war'
+                    stash name: "warfiles", includes: "**/*.war"
                 }
             }
         }
         stage ('Deploy Build in Staging Area'){
             agent {
                label 'STAGE'
+               unstash "warfiles"
            }
             steps{
                 build job: 'Deploy_To_Tomcat'
