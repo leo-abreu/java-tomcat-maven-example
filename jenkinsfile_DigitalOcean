@@ -22,9 +22,9 @@ pipeline {
         stage ('Deploy Build in Staging Area'){
             agent {
                label 'STAGE'
-               unstash "warfiles"
            }
             steps{
+                unstash "warfiles"
                 build job: 'Deploy_To_Tomcat'
             }
         }
