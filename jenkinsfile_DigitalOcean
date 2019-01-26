@@ -1,0 +1,49 @@
+pipeline {
+    agent none
+    tools {
+        maven 'LocalMaven'
+    }
+    stages {
+       stage ('Build Servlet Project') {
+           agent {
+               label 'maven'
+           }
+           steps {
+                sh 'mvn clean package'
+           }
+            post {
+                success {
+                    echo 'Now Archiving ...'
+                    archiveArtifacts artifacts : '**/*.war'
+                }
+            }
+        }
+        stage ('Deploy Build in Staging Area'){
+            agent {
+               label 'STAGE'
+           }
+            steps{
+                build job: 'Deploy_To_Tomcat'
+            }
+        }
+        stage ('Deploy to Production'){
+            agent {
+               label 'PROD'
+           }
+            steps{
+                timeout (time: 5, unit: 'DAYS'){
+                    input message: 'Approve PRODUCTION Deployment?'
+                }
+                build job: 'Deploy_To_Tomcat'
+            }
+            post{
+                success{
+                    echo 'Deployment on PRODUCTION is Successful'
+                }
+                failure{
+                    echo 'Deployment Failure on PRODUCTION'
+                }
+            }
+        }
+    }
+}
