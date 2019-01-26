@@ -13,7 +13,7 @@ pipeline {
            }
             post {
                 success {
-                    echo 'Now Archiving ...'
+                    echo 'Now Stashing ...'
                     // archiveArtifacts artifacts : '**/*.war'
                     stash name: "warfiles", includes: "**/*.war"
                 }
@@ -23,8 +23,9 @@ pipeline {
             agent {
                label 'STAGE'
            }
-           unstash "warfiles"
             steps{
+                echo 'Unstash WAR files...'
+                unstash "warfiles"
                 build job: 'Deploy_To_Tomcat'
             }
         }
